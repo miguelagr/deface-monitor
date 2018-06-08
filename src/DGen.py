@@ -48,7 +48,7 @@ def ip_gen():
     Salida:
         None
     """
-    ips = get_hosts(['132'],['248','247'],['10','70','80','54'])
+    ips = get_hosts(['132'],['248','247'])
     conn = psycopg2.connect("dbname=defmon user=mont password=hola123")
     cur = conn.cursor()
     for i in ips:
