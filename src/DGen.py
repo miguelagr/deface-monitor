@@ -48,7 +48,7 @@ def ip_gen():
     Salida:
         None
     """
-    ips = get_hosts(['132'],['248','247'])
+    ips = get_hosts(['132'],['248','247'],range(10,255))
     conn = psycopg2.connect("dbname=defmon user=mont password=hola123")
     cur = conn.cursor()
     for i in ips:
@@ -56,9 +56,10 @@ def ip_gen():
         cur.execute(cmd)
         ports = [Scan(i,p) for p in [80,443]]
         if cur.fetchone() is None:
-            cmd = "INSERT INTO ip(ipstring,http,https) VALUES ('%s', '%s','%s');" % (i,ports[0],ports[1])
-            print cmd
-            cur.execute(cmd)
+            if (ports[0] == 1) or (ports[1] == 1):
+                cmd = "INSERT INTO ip(ipstring,http,https) VALUES ('%s', '%s','%s');" % (i,ports[0],ports[1])
+                print cmd
+                cur.execute(cmd)
         else:
             cmd = "update ip set (http ,https)= ('%s','%s') where ipstring like '%s';" % (ports[0],ports[1],i)
             print cmd
@@ -158,5 +159,5 @@ def rec_gen(lrecs,ipid):
 Se debe correr primero ip_gen() y posteriormente
 rec_merge(), se pueden correr imultaneamente
 """
-ip_gen()
+#ip_gen()
 rec_merge()

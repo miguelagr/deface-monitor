@@ -28,10 +28,10 @@ function loadDoc1() {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) { 
-	var element = document.getElementById("mbody").innerHTML = this.responseText;
+	var element = document.getElementById("mainbody").innerHTML = this.responseText;
     }
   };
-  xhttp.open("GET", "fchart.html", true);
+  xhttp.open("GET", "charts.php", true);
   xhttp.send();
 }
 
@@ -79,4 +79,13 @@ req.onreadystatechange = function() {
 		}
 	};
 
+}
+
+function testDoc(){
+var xhr = new XMLHttpRequest();
+xhr.open('GET', 'server.php', true);
+xhr.onload = function () {
+	var element = document.getElementById("mbody").innerHTML = this.responseText
+};
+xhr.send('ip=ip');
 }
