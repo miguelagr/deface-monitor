@@ -204,7 +204,42 @@ def recser_gen(recid,servid):
     cur.close()
     conn.close()
 
-
+def correo(dominio,ip,cadena,fecha,rem,dest,psw):
+	remitente = "Aline Jairo Miguel <%s>" % rem
+	destinatario = "Incidentes <%s>" % dest
+	asunto = "Reporte Defacement/Minning" 
+	mensaje = """Hola!<br/> <br/> 
+	Dominio del sitio: "%s"
+	IP del sitio: "%s"
+	Cadena encontrada: "%s"
+	Fecha de deteccion: "%s"
+	""" % (dominio,ip,cadena,fecha)
+	 
+	email = """From: %s 
+	To: %s 
+	MIME-Version: 1.0 
+	Content-type: text/html 
+	Subject: %s 
+	 
+	%s
+	""" % (remitente, destinatario, asunto, mensaje) 
+	try: 
+		smtp = smtplib.SMTP('smtp.gmail.com',587) 
+		smtp.starttls()
+		smtp.login("%s" % rem ,"%s" % pwd)
+		smtp.set_debuglevel(1)
+		prueba = MIMEMultipart()
+		prueba['Subject']=asunto
+		prueba['From']=remitente
+		prueba['To']=destinatario
+		mensaje=MIMEText(mensaje,'html')
+		prueba.attach(mensaje)
+		smtp.sendmail(remitente, destinatario, prueba.as_string()) 
+		smtp.quit
+		print "Correo enviado" 
+	except: 
+		print """Error: el mensaje no pudo enviarse. 
+		Compruebe que sendmail se encuentra instalado en su sistema"""
 
 
 ar_gen()
