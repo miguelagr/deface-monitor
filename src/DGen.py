@@ -16,6 +16,15 @@ import os
 
 
 def get_hosts(b1=None,b2=None,b3=None,b4=None):
+    """
+    Devuelve un objeto con todas las IP's en un segmento
+    especificado
+    Argumentos:
+        (str)[]
+    Salida:
+        Lista de IP's (str)[]
+    
+    """
     ars = locals()
     ip = ''
     for i in ars:
@@ -30,6 +39,15 @@ def get_hosts(b1=None,b2=None,b3=None,b4=None):
 
 
 def Scan(ip,port):
+    """
+    Realiza un escaneo tipo SYN en el IP ypuerto
+    especificado
+    Argumentos:
+        Puerto (Int)
+        IP (Int)
+    Salida:
+        0 o 1 si es abierto o cerrado respectivamente
+    """
     try:
         sock = socket.create_connection((ip,port),timeout=0.1)
         sock.close()
@@ -71,6 +89,14 @@ def ip_gen():
 
 
 def finder(ip):
+    """
+    Entrega una lista de dominios asociados a la IP en caso de
+    contar con alguno
+    Argumentos:
+        IP (str)
+    Salida:
+        Dominios (str)[]
+    """
     bing_url = 'http://www.bing.com/search?q=ip%3a'
     urls_array = []
     count = 0
@@ -97,13 +123,12 @@ def finder(ip):
 
 def rec_merge():
     """
-    Busca el texto en claro que corresponde al hash de la entrada
+    Genera una lista con todos los recuersos encontrados
+    formado por su URL
     Argumentos:
-        Tabla de busqueda (str)
-        Cadena del digest en formato hexadecimal (str)
-        Algoritmos posibles para el digest (str[])
+        None
     Salida:
-        Texto en claro correspondiente al hash de entrada (str[])
+        None
     """
     conn = psycopg2.connect("dbname=defmon user=mont password=hola123")
     cur = conn.cursor()
@@ -133,8 +158,8 @@ def rec_merge():
 
 def rec_gen(lrecs,ipid):
     """
-    Genera la base de datos con todos los hashes de cada 
-    cadena de un archivo de entrada
+    Inserta en la base de datos todos los recursos 
+    con sus respectivas URL 
     Argumento:
         Nombre del archivo donde se sacan las cadenas en claro (str)
         Nombre de la tabla (str)
