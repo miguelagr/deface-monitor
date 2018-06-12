@@ -37,3 +37,5 @@ Correr el Script Rgen.py
 python RGen.py
 ```
 
+Interfaz web:
+![](doc/index.jpeg?raw=true)
