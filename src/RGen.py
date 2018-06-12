@@ -173,9 +173,15 @@ def analiza_cuerpo(doc,arid):
             cmd = "INSERT INTO deteccion(arid,descripcion) VALUES ('%s','%s');" % (arid,"Defacement detectado")
             cur.execute(cmd)
             conn.commit()
+            cmd2 = "select url,ipstring from archivo a, recurso r, ip i where a.recid = r.recid and i.ipid = r.ipid and a.arid = %s;"%arid
+            reg = list(cur1.fetchone())
+            dominio = reg[0]
+            ip = reg[1]
+            correo(dominio,ip,dfmnt[0],datetime.datetime.now(),"correo@correo.com","destinatario@correo.com","passwordRem")
+            print "encontrado"
             cur.close()
             conn.close()
-            print "encontrado"
+
     except Exception as e:
         print 'No se encontro nada en el cuerpo de la pagina'
 
@@ -197,7 +203,7 @@ def recser_gen(recid,servid):
         print cmd
         cur.execute(cmd)
     else:
-        cmd = "updaterecser set (recid,servid) = (%s, %s) where recid = %s;" % (recid,servid,recid)
+        cmd = "update recser set (recid,servid) = (%s, %s) where recid = %s;" % (recid,servid,recid)
         print cmd
         cur.execute(cmd)
     conn.commit()
