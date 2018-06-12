@@ -26,13 +26,12 @@ itwork=['It Works','it works','It works','it Works']
 
 def serv_gen(nombre,cms=None):
     """
-    Genera la base de datos con todos los hashes de cada 
-    cadena de un archivo de entrada
+    Inserta valores en la tabla de servicio
     Argumento:
-        Nombre del archivo donde se sacan las cadenas en claro (str)
-        Nombre de la tabla (str)
+        Nombre del servicio identificado (str)
+        Nombre del cms identificado (str)
     Salida:
-        None
+        Id del servicio (Int)
     """
     conn = psycopg2.connect("dbname=defmon user=mont password=hola123")
     cur = conn.cursor()
@@ -55,6 +54,13 @@ def serv_gen(nombre,cms=None):
     return servid
 
 def serv_id(texto):
+    """
+    Identifica el tipo de servicio
+    Argumentos:
+        texto del recurso
+    Salida:
+        Id del servicio identificado (Int)
+    """
     var1 = re.findall('<meta name=\"generator\" content=\".*\"',texto)
     cms2 = None
     if var1!=[]:
@@ -80,13 +86,11 @@ def serv_id(texto):
 
 def ar_gen():
     """
-    Busca el texto en claro que corresponde al hash de la entrada
+    Genera la tabla con los archivos identificados
     Argumentos:
-        Tabla de busqueda (str)
-        Cadena del digest en formato hexadecimal (str)
-        Algoritmos posibles para el digest (str[])
+        None
     Salida:
-        Texto en claro correspondiente al hash de entrada (str[])
+        None
     """
     conn = psycopg2.connect("dbname=defmon user=mont password=hola123")
     cur = conn.cursor()
@@ -123,6 +127,14 @@ def ar_gen():
     conn.close()
 
 def store(doc,md5,uri,recid):
+    """
+    Almacena los archivos
+    Argumentos:
+        Recurso (str)[]
+        md5 del recurso (str)[]
+        Uri (str)[]
+        Id del recurso (Int)
+    """
     conn = psycopg2.connect("dbname=defmon user=mont password=hola123")
     cur = conn.cursor()
     cmd = "INSERT INTO archivo(loc,md5,gen,recid) VALUES ('%s','%s',current_timestamp(0),%s);" % ('%s'%uri,md5,recid)
@@ -145,13 +157,12 @@ def store(doc,md5,uri,recid):
 
 def analiza_cuerpo(doc,arid):
     """
-    Analiza las cabeceras recibidas del metodo HEAD al servidor
+    Analiza el cuerpo en busca de cadenas maliciosas
     Argumentos:
-        url (str) : La URL del servidor
-        sesion (session) : objeto session
+        Recurso a analizar (str)[]
+        Id del archivo (Int)
     Salida:
-        cms (str) : El CMS utilizado por la pagina
-        correos (str)[] : Lista de correos encontrados en la pagina
+        None
     """
  
     try:
@@ -170,11 +181,10 @@ def analiza_cuerpo(doc,arid):
 
 def recser_gen(recid,servid):
     """
-    Genera la base de datos con todos los hashes de cada 
-    cadena de un archivo de entrada
+    Genera la tabla transitiva entre recurso y servicio
     Argumento:
-        Nombre del archivo donde se sacan las cadenas en claro (str)
-        Nombre de la tabla (str)
+        Id del recurso (Int)
+        Ide del servicio (Int)
     Salida:
         None
     """
