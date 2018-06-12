@@ -43,7 +43,7 @@
 			<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 			<li><a href="#">Inicio</a></li>
-			<li><a onClick=testDoc()>Dominios</a></li>
+			<li><a onClick=loadDoc()>Dominios</a></li>
 			<li><a onClick=loadDoc4()>Clasificación</a></li>
 			<li><a href="charts.php">Gráficas </a></li>
 			<li><a href="#">Histórico</a></li>
