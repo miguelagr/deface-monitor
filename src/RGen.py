@@ -12,6 +12,7 @@ import urlparse
 import argparse
 import re
 import os
+import datetime
 
 
 dvr=['sony','camera','camara','dvr','axis','axiscommunications','panasonic','mobotix','milestone','jvc','vivotek','y-cam','qnap','arecont','iqeye','pelco','veracity','videotec','fujinon','powerdsine','securityspy']
