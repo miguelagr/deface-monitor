@@ -39,3 +39,5 @@ python RGen.py
 
 Interfaz web:
 ![](doc/index.jpeg?raw=true)
+Gneracion de graficas:
+![](doc/charts.jpeg?raw=true)
