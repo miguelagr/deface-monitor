@@ -20,8 +20,8 @@ Requerimientos
 	
 
 Intrucciones de uso:
-	** Copiar la carpeta html en un sitio de apache 
-	** Configuracion de la conexion a PostgreSQL
+*	** Copiar la carpeta html en un sitio de apache 
+*	** Configuracion de la conexion a PostgreSQL
 		Ejemplo:
 pg\_hba
 
